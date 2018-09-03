@@ -30,30 +30,44 @@ This is list of steps followed to obtain a dump from a db then retsore it
 
 ### Import the Postgres dump
 
-1. Take `production.dump` to the local machine.
+1. If you are copying Database from MIQ-ME1 (ManageIQ Management Engine) machine        to MIQ-ME2 machine, if the Region numbers of both machines are different, then you wouldn't be able to start evmserverd on MIQ-ME2.
+You would need to manually change the Region number of MIQ-ME2.
 
-2. Stop the backend processes
+    You can get  _Region Number_ by executing following query,
+
+        # psql vmdb_production -c "select id,region,created_at,guid from miq_regions;"
+
+This number will require to restore in database later.
+
+2. Take `production.dump` to the local machine.
+
+3. Stop the backend processes
 
         # systemctl stop evmserverd
-3. Drop existing database `vmdb_production` 
+4. Drop existing database `vmdb_production` 
 
         # dropdb vmdb_production
 
-4. create new database named `vmdb_production`
+5. create new database named `vmdb_production`
 
         # createdb vmdb_production
 
-5. restore the database from dump file
+6. restore the database from dump file
 
         # pg_restore -d vmdb_production "/path/to/production.dump"
-6. change directory to `/var/www/miq/vmdb/tools` 
+
+7. The correct _Region Number_  that we have in _step1_ enter it in ```/var/www/miq/vmdb/REGION``` file 
+
+8. change directory to `/var/www/miq/vmdb/tools` 
 
         # vmdb  #executing "vmdb" will take you to "/var/www/miq/vmdb/"
         # cd tools
         # bundle exec fix_auth.rb --v2 --invalid bogus
-7. Start evm service
+9. Start evm service
 
         # systemctl start evmserverd
+
+
 This will do the task of restoring database manually.
 
 In next the same task is automated using Ansible

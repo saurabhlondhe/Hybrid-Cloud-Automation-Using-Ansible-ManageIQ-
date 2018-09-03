@@ -16,35 +16,31 @@ here all  installation steps will go.
 
     Start Docker service using
 
-    ``` $ sudo service docker start ```
-
+        $ sudo service docker start 
     or do 
 
-    ``` $ systemctl start docker ```
-
+        $ sudo systemctl start docker 
     ### Step 1: Pull Docker image of ManageIQ
 
-    ``` $ sudo docker pull manageiq/manageiq ```
-
+        $ sudo docker pull manageiq/manageiq 
     or
 
-    ``` $ sudo docker pull manageiq/manageiq:gaprindashvili-4 ```
-
+        sudo docker pull manageiq/manageiq:gaprindashvili-4 
     It will download ManageIQ image from Docker registry. To see image list, run this
 
-    ``` $ sudo docker images ls ```
+        $ sudo docker images ls 
 
     ### Stpe 2: Run Docker container
 
-    ``` $ sudo docker run --privileged -d -p 8443:443 manageiq/manageiq ```
+        $ sudo docker run --privileged -d -p 8443:443 manageiq/manageiq 
 
     or
 
-    ``` $ sudo docker run --privileged -d -p 8443:443 manageiq/manageiq:gaprindashvili-4 ```
+        $ sudo docker run --privileged -d -p 8443:443 manageiq/manageiq:gaprindashvili-4
 
     It will run container in detached mode. ``` -p 8443:443``` will forward your base machine's _8443_ port requests to docker container's _443_ port. To see a list of running containers, execute
 
-    ``` $ sudo docker ps ```
+        $ sudo docker ps
 
 
     Now ManageIQ container is up and running at IP address [https://127.0.0.1:8443](https://127.0.0.1:8443)
@@ -55,7 +51,7 @@ here all  installation steps will go.
 
     It can be useful to commit a container’s file changes or settings into a new image. This allows you to debug a container by running an interactive shell, or to export a working dataset to another server. 
 
-    ``` $ docker commit "container_id" manageiq```
+        $ docker commit "container_id" manageiq
 
     this saves all changes and data, next time run the ``` manageiq``` container.
 
