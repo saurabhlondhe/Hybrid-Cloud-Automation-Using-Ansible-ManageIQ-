@@ -13,20 +13,20 @@ This is list of steps followed to obtain a dump from a db then retsore it
 
 1. stop the appliance(s):
     
-        #systemctl stop evmserverd
+        # systemctl stop evmserverd
  
     This will stop the evmserverd.service from using database in background but no need to stop them, for creating backup the doesn't affects anywhere.
 
 2. dump the database into file:
 
     
-        pg_dump -Fc vmdb_production > production.dump
+        # pg_dump -Fc vmdb_production > production.dump
 
 3. Copy the dump file to the other ManageIQ instance where the database have to restore.
 
     We can use `scp` for that as follows:
         
-        scp production.dump root@ip_of_other_instance:/root/
+        # scp production.dump root@ip_of_other_instance:/root/
 
 ### Import the Postgres dump
 
