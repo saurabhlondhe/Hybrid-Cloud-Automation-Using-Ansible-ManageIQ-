@@ -1,6 +1,6 @@
 # Intorduction to ManageIQ
 - ManageIQ is an Open Source Cloud management platform. The ManageIQ project founded by Red Hat In 2014 as a community  project. It is written in Ruby with RoR (Ruby on Rails) as platform.
-- For getting started get a ManageIQ instanses from [here](http://manageiq.org/download/)
+- For getting started get a ManageIQ instances from [here](http://manageiq.org/download/)
 
 ---
 ### Installation
