@@ -37,7 +37,7 @@ You would need to manually change the Region number of MIQ-ME2.
 
         # psql vmdb_production -c "select id,region,created_at,guid from miq_regions;"
 
-This number will require to restore in database later.
+   This number will require to restore in database later.
 
 2. Take `production.dump` to the local machine.
 
