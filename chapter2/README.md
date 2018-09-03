@@ -15,7 +15,7 @@ This is list of steps followed to obtain a dump from a db then retsore it
     
         # systemctl stop evmserverd
  
-    This will stop the evmserverd.service from using database in background but no need to stop them, for creating backup the doesn't affects anywhere.
+    This will stop the evmserverd.service from using database in background but no need to stop them, for creating backup they doesn't affects anywhere.
 
 2. dump the database into file:
 
@@ -45,7 +45,7 @@ This is list of steps followed to obtain a dump from a db then retsore it
 
 5. restore the database from dump file
 
-        # pg_restore -d vmdb_production "/path/to/production.dump
+        # pg_restore -d vmdb_production "/path/to/production.dump"
 6. change directory to `/var/www/miq/vmdb/tools` 
 
         # vmdb  #executing "vmdb" will take you to "/var/www/miq/vmdb/"
