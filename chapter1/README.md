@@ -6,8 +6,26 @@
 ### Installation
 - Using KVM/Qemu image
 
-here all  installation steps will go.
+    - Download ManageIQ Image from [manageiq/downloads](http://manageiq.org/download/) choose QEmu/KVM
 
+    - Install KVM and necessary packages
+
+            # yum install qemu-kvm libvirt libvirt-python virt-install
+    
+    - Create ManageIQ VM using existing image
+        - Create VM using ```virt-install``` command
+
+                # sudo virt-install --virt-type kvm  --import --name ManageIQ  --memory 12288 --vcpus 4 --cpu host  --disk manageiq-openstack-gaprindashvili-5.qc2,format=qcow2,bus=virtio  --network default,model=virtio   --os-type=linux --os-variant=centos7.0   --graphics spice
+    
+    - Launch VM using ```virsh ```
+            
+            # virsh start ManageIQ
+    - Login using ssh
+            
+            # ssh root@<ip_of_server>
+        - user: _root_
+        - password: _smartvm_
+        
 - Using docker image
 
     Docker image for ManageIQ is available. It can be run in Docker container. There are also other options like [Public cloud](http://manageiq.org/docs/get-started/cloud) or [Vagrant](http://manageiq.org/docs/get-started/vagrant) to get started with ManageIQ. It can run everywhere Docker is available.

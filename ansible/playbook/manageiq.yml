@@ -1,0 +1,82 @@
+---
+- name: ManageIQ server 1
+  hosts: 192.168.122.195
+  remote_user: root
+  gather_facts: true
+  tasks: 
+  - name: take backup to production.dump
+    shell: "pg_dump -Fc vmdb_production > production.dump"
+
+- name: Control node
+  hosts: 172.22.26.226
+  #connection: local
+  remote_user: root
+  become: yes
+  tasks:
+  - name: take dump file to local
+    shell: scp root@192.168.122.195:/root/production.dump .
+  
+  - name: install new ManageIQ VM 
+    command: virt-install --virt-type kvm \
+             --import --name ManageIQ8 \
+             --memory 12288 \
+             --vcpus 4 \
+             --cpu host  \
+             --disk "/home/centos/managiq images/sk/a.qc2",format=qcow2,bus=virtio  \
+             --network default,model=virtio   \
+             --os-type=linux \
+             --os-variant=centos7.0   \
+             --noautoconsole
+  - pause: seconds=30
+
+  - name: get vm ip address
+    shell: virsh domifaddr ManageIQ8 | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | head -1
+    register: host_name
+
+  - name: install the latest version of sshpass
+    yum:
+      name: sshpass
+      state: present
+    when: ansible_distribution == "CentOS"
+  - name: install the latest version of sshpass
+    apt:
+      name: sshpass
+      state: present
+    when: ansible_distribution == "Ubuntu"
+  
+  - debug:
+      msg: "ip is {{host_name.stdout}}"
+  
+  - name: get rsa public key
+    shell: cat ~/.ssh/id_rsa.pub
+    register: id_rsa
+  
+  - pause: seconds=30
+  
+  - name: copy ssh id
+    command: sshpass -p "smartvm" ssh root@{{host_name.stdout}} "echo '{{id_rsa.stdout}}' >> ~/.ssh/authorized_keys"
+  - name: copy dump to new instance
+    shell: scp /root/production.dump root@{{host_name.stdout}}:/root/
+
+- hosts: host_name.stdout
+  remote_user: root
+  gather_facts: true
+  tasks:
+
+  - name: stop evmserverd service
+    command: systemctl stop evmserverd
+
+  - name: drop database
+    command: dropdb vmdb_production
+
+  - name: create new database
+    command: createdb vmdb_production
+
+  - name: restore database
+    command: pg_restore -d vmdb_production "/root/production.dump"
+
+  - name: fix authentications
+    command: bundle exec /var/www/miq/vmdb/tools/fix_auth.rb --v2 --invalid bogus
+
+  - name: restart service
+    command: systemctl start evmserverd
