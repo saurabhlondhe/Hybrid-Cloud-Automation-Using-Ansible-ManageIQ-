@@ -1,0 +1,8 @@
+---
+  MIQ_SERVER: 192.168.122.195
+  CONTROL_NODE: 127.0.0.1
+  DUMP_NAME: production.dump
+  PATH_TO_IMAGE: /home/centos/managiq images/sk/a.qc2
+  TIME: 45
+  TIME_2: 20
+  PATH_TO_MIQ_SETUP: /home/centos/project/py_java/miq_setup.yml

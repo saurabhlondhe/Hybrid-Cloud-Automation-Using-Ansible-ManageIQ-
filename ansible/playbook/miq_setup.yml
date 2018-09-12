@@ -1,0 +1,33 @@
+---
+- hosts: 192.168.122.183
+  remote_user: root
+  gather_facts: true
+  tasks:
+
+  - name: stop evmserverd service
+    command: systemctl stop evmserverd
+    register: out
+  - debug: var=out.stdout_lines
+
+  - name: drop database
+    command: dropdb vmdb_production
+    register: out
+  - debug: var=out.stdout_lines
+
+  - name: create new database
+    command: createdb vmdb_production
+    register: out
+  - debug: var=out.stdout_lines
+
+  - name: restore database
+    command: pg_restore -d vmdb_production "/root/production.dump"
+    register: out
+  - debug: var=out.stdout_lines
+
+  - name: fix authentications
+    command: bundle exec /var/www/miq/vmdb/tools/fix_auth.rb --v2 --invalid bogus
+    register: out
+  - debug: var=out.stdout_lines
+
+  - name: restart service
+    command: systemctl start evmserverd
