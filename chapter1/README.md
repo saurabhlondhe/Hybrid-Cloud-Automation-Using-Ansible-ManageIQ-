@@ -25,7 +25,7 @@
             # ssh root@<ip_of_server>
         - user: _root_
         - password: _smartvm_
-        
+---        
 - Using docker image
 
     Docker image for ManageIQ is available. It can be run in Docker container. There are also other options like [Public cloud](http://manageiq.org/docs/get-started/cloud) or [Vagrant](http://manageiq.org/docs/get-started/vagrant) to get started with ManageIQ. It can run everywhere Docker is available.
@@ -77,6 +77,9 @@
 ### Appliance console and basic configuration
 
 Running a command _appliance_console_  ot _ap_ to get into ManageIQ Virtual Appliance. It gives datails regarding ManageIQ Machine such as,
+
+![ManageIQ appliance console](../assets/img/ap_console.png)
+
 - hostname 
 - IPv4 Address
 - IPv4 Gateway
@@ -95,6 +98,8 @@ Running a command _appliance_console_  ot _ap_ to get into ManageIQ Virtual Appl
 - ManageIQ Version
 
 Pressing Enter will lead to the Advanced Settings
+
+![ManageIQ Advance Settings](../assets/img/ap_advance_settings.png)
 
 1. Configure Network
 2. Set Timezone
