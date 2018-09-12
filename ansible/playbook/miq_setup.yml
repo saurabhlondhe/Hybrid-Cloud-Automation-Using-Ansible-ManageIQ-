@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.122.183
+- hosts: 192.168.122.124
   remote_user: root
   gather_facts: true
   tasks:
