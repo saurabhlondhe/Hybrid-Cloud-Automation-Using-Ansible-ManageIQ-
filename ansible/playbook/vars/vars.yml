@@ -5,4 +5,4 @@
   PATH_TO_IMAGE: /home/centos/managiq images/sk/a.qc2
   TIME: 45
   TIME_2: 20
-  PATH_TO_MIQ_SETUP: /home/centos/project/py_java/miq_setup.yml
+  PATH_TO_MIQ_SETUP: /home/centos/github/Hybrid-Cloud-Automation-Using-Ansible-ManageIQ-/ansible/playbook/miq_setup.yml
